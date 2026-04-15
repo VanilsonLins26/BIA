@@ -23,7 +23,10 @@ export const InstallPrompt = () => {
       // Show after a small delay (1.5s) if on mobile, and limit based on localStorage
       const hasDismissed = localStorage.getItem("bia_install_prompt_dismissed");
       if (!hasDismissed && (isIOS || isAndroid)) {
-        const timer = setTimeout(() => setShowPrompt(true), 1500);
+        const timer = setTimeout(() => {
+          setShowPrompt(true);
+          window.dispatchEvent(new Event("installPromptShown"));
+        }, 1500);
         return () => clearTimeout(timer);
       }
     }
@@ -32,6 +35,7 @@ export const InstallPrompt = () => {
   const handleDismiss = () => {
     setShowPrompt(false);
     localStorage.setItem("bia_install_prompt_dismissed", "true");
+    window.dispatchEvent(new Event("installPromptDismissed"));
   };
 
   if (!showPrompt) return null;

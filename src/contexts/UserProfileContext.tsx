@@ -58,15 +58,36 @@ export function UserProfileProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  // Auto-show modal after timer if not yet completed
+  // Auto-show modal after timer if not yet completed, yielding to InstallPrompt
   useEffect(() => {
     if (profileCompleted) return;
-    const timer = setTimeout(() => {
+    
+    let timer: number | undefined;
+    
+    const checkAndShow = () => {
       if (!localStorage.getItem(MODAL_SHOWN_KEY)) {
         setShowProfileModal(true);
       }
-    }, 10000);
-    return () => clearTimeout(timer);
+    };
+
+    const handleInstallShown = () => {
+       clearTimeout(timer);
+    };
+
+    const handleInstallDismissed = () => {
+       setTimeout(checkAndShow, 800);
+    };
+
+    window.addEventListener("installPromptShown", handleInstallShown);
+    window.addEventListener("installPromptDismissed", handleInstallDismissed);
+
+    timer = window.setTimeout(checkAndShow, 10000);
+
+    return () => {
+       clearTimeout(timer);
+       window.removeEventListener("installPromptShown", handleInstallShown);
+       window.removeEventListener("installPromptDismissed", handleInstallDismissed);
+    };
   }, [profileCompleted]);
 
   return (
