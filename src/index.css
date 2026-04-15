@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 270 20% 97%;
+    --foreground: 270 30% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 270 30% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 30% 15%;
+
+    --primary: 270 55% 78%;
+    --primary-foreground: 270 30% 15%;
+
+    --secondary: 330 70% 85%;
+    --secondary-foreground: 330 40% 25%;
+
+    --muted: 270 10% 95%;
+    --muted-foreground: 270 10% 45%;
+
+    --accent: 330 70% 85%;
+    --accent-foreground: 330 40% 25%;
+
+    --destructive: 15 50% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 15% 90%;
+    --input: 270 15% 90%;
+    --ring: 270 55% 78%;
+
+    --radius: 1.5rem;
+
+    --safe-exit: 15 50% 50%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Custom tokens */
+    --glow-primary: 0 10px 30px -10px hsla(270, 55%, 78%, 0.25);
+    --glow-accent: 0 10px 30px -10px hsla(330, 70%, 85%, 0.25);
+    --guardian-glow: 0 10px 30px -10px hsla(270, 55%, 78%, 0.15), 0 0 0 1px hsla(0, 0%, 100%, 0.5) inset;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-balance;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .guardian-glow {
+    box-shadow: var(--guardian-glow);
+  }
+
+  .glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+
+  .glow-accent {
+    box-shadow: var(--glow-accent);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 999px;
+}

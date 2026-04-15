@@ -1,0 +1,22 @@
+{
+  "name": "BIA – Busca de Informações e Apoio",
+  "short_name": "BIA",
+  "description": "Um espaço seguro para orientar mulheres e conectar com redes de proteção.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F8F5FC",
+  "theme_color": "#C9A4E8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

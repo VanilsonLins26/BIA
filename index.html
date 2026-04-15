@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>BIA – Busca de Informações e Apoio</title>
+    <meta name="description" content="BIA – Um espaço seguro para orientar mulheres e conectar com redes de proteção em Fortaleza." />
+    <meta name="theme-color" content="#C9A4E8" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+
+    <meta property="og:title" content="BIA – Busca de Informações e Apoio" />
+    <meta property="og:description" content="Um espaço seguro para orientar mulheres e conectar com redes de proteção." />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+  </body>
+</html>
