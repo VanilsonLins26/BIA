@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Loader2, Heart, Phone, Shield, BookOpen, AlertTriangle, ThumbsUp, ThumbsDown, LogOut, ArrowRight } from "lucide-react";
+import { Send, Loader2, Heart, Phone, Shield, BookOpen, AlertTriangle, ThumbsUp, ThumbsDown, ArrowRight } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { trackEvent } from "@/lib/metrics";
 
@@ -214,20 +214,7 @@ const BIAChat = () => {
 
   return (
     <div className="flex flex-col h-full relative">
-      {/* Floating Emergency Exit - Fixado no topo para segurança máxima */}
-      {hasStarted && (
-        <div className="absolute top-2 left-0 right-0 z-20 px-4 pointer-events-none flex justify-end">
-          <div className="max-w-2xl w-full mx-auto flex justify-end">
-            <button
-              onClick={() => window.location.replace("https://google.com")}
-              className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-lg transition-transform hover:scale-105 active:scale-95 pointer-events-auto"
-            >
-              <LogOut size={16} />
-              SAÍDA RÁPIDA
-            </button>
-          </div>
-        </div>
-      )}
+
       {/* Messages area */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-6">
         <div className="max-w-2xl mx-auto space-y-4">

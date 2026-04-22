@@ -9,7 +9,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="h-[calc(100vh-4rem)] relative">
+    <div className="h-[calc(100dvh-4rem)] relative">
       <BIAChat />
       <InstallPrompt />
     </div>
