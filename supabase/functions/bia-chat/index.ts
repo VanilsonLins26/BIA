@@ -113,7 +113,7 @@ serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "gemini-3.1-pro",
+          model: "gemini-2.5-flash",
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
             ...messages,
@@ -139,7 +139,7 @@ serve(async (req) => {
       const t = await response.text();
       console.error("Gemini API error:", response.status, t);
       return new Response(
-        JSON.stringify({ error: "Erro ao processar sua mensagem." }),
+        JSON.stringify({ error: `Erro da IA (Status ${response.status}): ${t}` }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }

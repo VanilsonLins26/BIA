@@ -257,9 +257,9 @@ const BIAChat = () => {
                   <button
                     key={btn.label}
                     onClick={() => sendMessage(btn.label)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-card border border-border text-sm text-foreground hover:bg-primary/10 hover:border-primary/30 transition-colors text-left"
+                    className="flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-card border-2 border-primary/20 text-base font-medium text-foreground hover:bg-primary/10 hover:border-primary/40 transition-colors text-left shadow-sm"
                   >
-                    <btn.icon size={18} className="text-primary flex-shrink-0" />
+                    <btn.icon size={20} className="text-primary flex-shrink-0" />
                     {btn.label}
                   </button>
                 ))}
@@ -276,14 +276,14 @@ const BIAChat = () => {
             >
               <div className={`max-w-[85%] ${msg.role === "user" ? "" : "group"}`}>
                 <div
-                  className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                  className={`rounded-2xl px-5 py-3.5 text-base md:text-lg leading-relaxed shadow-sm ${
                     msg.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-md"
-                      : "bg-muted text-foreground rounded-bl-md"
+                      ? "bg-primary text-primary-foreground font-medium rounded-br-md"
+                      : "bg-white border text-foreground font-medium rounded-bl-md"
                   }`}
                 >
                   {msg.role === "assistant" ? (
-                    <div className="prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0.5 prose-strong:text-foreground prose-headings:text-foreground prose-headings:text-sm prose-headings:font-display">
+                    <div className="prose prose-base md:prose-lg max-w-none prose-p:my-1.5 prose-ul:my-1.5 prose-li:my-1 prose-strong:text-foreground prose-headings:text-foreground prose-headings:text-base md:prose-headings:text-lg prose-headings:font-display">
                       <ReactMarkdown>{msg.content}</ReactMarkdown>
                     </div>
                   ) : (
@@ -336,7 +336,7 @@ const BIAChat = () => {
               <button
                 key={s}
                 onClick={() => sendMessage(s)}
-                className="whitespace-nowrap shrink-0 snap-start px-4 py-2 rounded-full text-sm font-medium bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground border border-border shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="whitespace-nowrap shrink-0 snap-start px-5 py-2.5 rounded-full text-base font-bold bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground border-2 border-primary/20 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
                 {s}
               </button>
@@ -355,8 +355,8 @@ const BIAChat = () => {
             onKeyDown={handleKeyDown}
             placeholder="Digite sua mensagem..."
             rows={1}
-            className="flex-1 resize-none bg-muted rounded-2xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 max-h-32"
-            style={{ minHeight: "44px" }}
+            className="flex-1 resize-none bg-white border border-input rounded-2xl px-4 py-3.5 text-base font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent max-h-32 shadow-sm"
+            style={{ minHeight: "52px" }}
           />
           <button
             type="submit"
