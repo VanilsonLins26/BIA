@@ -104,24 +104,66 @@ serve(async (req) => {
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
     if (!GEMINI_API_KEY) throw new Error("GEMINI_API_KEY is not configured");
 
-    const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${GEMINI_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "gemini-2.5-flash",
-          messages: [
-            { role: "system", content: SYSTEM_PROMPT },
-            ...messages,
-          ],
-          stream: true,
-        }),
+    let response;
+    try {
+      response = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${GEMINI_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gemini-2.5-flash",
+            messages: [
+              { role: "system", content: SYSTEM_PROMPT },
+              ...messages,
+            ],
+            stream: true,
+          }),
+        }
+      );
+    } catch (e) {
+      console.error("Erro de rede na API do Gemini:", e);
+    }
+
+    // Fallback: se a resposta falhou (status de erro) ou foi nula (erro de rede)
+    if (!response || !response.ok) {
+      console.warn("Gemini falhou (ou sobrecarregado). Iniciando fallback para Grok...");
+      const XAI_API_KEY = Deno.env.get("XAI_API_KEY");
+
+      if (XAI_API_KEY) {
+        try {
+          response = await fetch(
+            "https://api.x.ai/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${XAI_API_KEY}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                model: "grok-beta",
+                messages: [
+                  { role: "system", content: SYSTEM_PROMPT },
+                  ...messages,
+                ],
+                stream: true,
+              }),
+            }
+          );
+        } catch (e) {
+          console.error("Erro de rede na API da xAI (Grok):", e);
+        }
+      } else {
+        console.warn("Chave XAI_API_KEY não configurada. Fallback para Grok ignorado.");
       }
-    );
+    }
+
+    if (!response) {
+      throw new Error("Falha na comunicação com as APIs de IA.");
+    }
 
     if (!response.ok) {
       if (response.status === 429) {
@@ -137,7 +179,7 @@ serve(async (req) => {
         );
       }
       const t = await response.text();
-      console.error("Gemini API error:", response.status, t);
+      console.error("API error:", response.status, t);
       return new Response(
         JSON.stringify({ error: `Erro da IA (Status ${response.status}): ${t}` }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
