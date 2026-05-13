@@ -111,7 +111,6 @@ const Analytics = () => {
         Acessos: values.pageViews || 0,
         Conversas: values.chatStarted || 0,
         Interações: values.chatInteractions || 0,
-        Instalações: values.installClicks || 0,
       }))
       .sort((a, b) => a.date.localeCompare(b.date));
   })();
@@ -121,9 +120,6 @@ const Analytics = () => {
         { icon: MousePointer, label: "Acessos ao site", value: metrics.pageViews },
         { icon: MessageCircle, label: "Conversas iniciadas", value: metrics.chatStarted },
         { icon: BarChart3, label: "Interações com o bot", value: metrics.chatInteractions },
-        { icon: Smartphone, label: "Cliques em instalar", value: metrics.installClicks },
-        { icon: ThumbsUp, label: "Avaliações positivas", value: metrics.npsPositive },
-        { icon: ThumbsDown, label: "Avaliações negativas", value: metrics.npsNegative },
         { icon: ThumbsUp, label: "Perfis criados", value: metrics.profile_created },
         { icon: ThumbsDown, label: "Perfis pulados", value: metrics.profile_skipped },
         { icon: BarChart3, label: "Avatares selecionados", value: metrics.avatar_selected },
@@ -213,7 +209,6 @@ const Analytics = () => {
                     <Line type="monotone" dataKey="Acessos" stroke="#C9A4E8" strokeWidth={2} dot={false} />
                     <Line type="monotone" dataKey="Conversas" stroke="#F5B7D3" strokeWidth={2} dot={false} />
                     <Line type="monotone" dataKey="Interações" stroke="#9b6cc4" strokeWidth={2} dot={false} />
-                    <Line type="monotone" dataKey="Instalações" stroke="#e896b8" strokeWidth={2} dot={false} />
                   </LineChart>
                 </ResponsiveContainer>
               </motion.div>
