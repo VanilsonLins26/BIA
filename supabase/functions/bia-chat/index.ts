@@ -106,6 +106,7 @@ serve(async (req) => {
 
     let response;
     try {
+      console.log("=== USANDO IA: GEMINI ===");
       response = await fetch(
         "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
         {
@@ -135,6 +136,7 @@ serve(async (req) => {
 
       if (GROQ_API_KEY) {
         try {
+          console.log("=== USANDO IA: GROQ ===");
           response = await fetch(
             "https://api.groq.com/openai/v1/chat/completions",
             {
@@ -166,6 +168,7 @@ serve(async (req) => {
 
       if (OPENROUTER_API_KEY) {
         try {
+          console.log("=== USANDO IA: OPENROUTER ===");
           response = await fetch(
             "https://openrouter.ai/api/v1/chat/completions",
             {
