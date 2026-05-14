@@ -128,23 +128,23 @@ serve(async (req) => {
       console.error("Erro de rede na API do Gemini:", e);
     }
 
-    // Fallback: se a resposta falhou (status de erro) ou foi nula (erro de rede)
+    // Fallback 1: Groq
     if (!response || !response.ok) {
-      console.warn("Gemini falhou (ou sobrecarregado). Iniciando fallback para Grok...");
-      const XAI_API_KEY = Deno.env.get("XAI_API_KEY");
+      console.warn("Gemini falhou (ou sobrecarregado). Iniciando fallback 1 para Groq...");
+      const GROQ_API_KEY = Deno.env.get("GROQ_API_KEY");
 
-      if (XAI_API_KEY) {
+      if (GROQ_API_KEY) {
         try {
           response = await fetch(
-            "https://api.x.ai/v1/chat/completions",
+            "https://api.groq.com/openai/v1/chat/completions",
             {
               method: "POST",
               headers: {
-                Authorization: `Bearer ${XAI_API_KEY}`,
+                Authorization: `Bearer ${GROQ_API_KEY}`,
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                model: "grok-beta",
+                model: "llama-3.3-70b-versatile",
                 messages: [
                   { role: "system", content: SYSTEM_PROMPT },
                   ...messages,
@@ -154,10 +154,43 @@ serve(async (req) => {
             }
           );
         } catch (e) {
-          console.error("Erro de rede na API da xAI (Grok):", e);
+          console.error("Erro de rede na API do Groq:", e);
+        }
+      }
+    }
+
+    // Fallback 2: OpenRouter
+    if (!response || !response.ok) {
+      console.warn("Groq falhou. Iniciando fallback 2 para OpenRouter...");
+      const OPENROUTER_API_KEY = Deno.env.get("OPENROUTER_API_KEY");
+
+      if (OPENROUTER_API_KEY) {
+        try {
+          response = await fetch(
+            "https://openrouter.ai/api/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+                "Content-Type": "application/json",
+                "HTTP-Referer": "https://bia-apoio-virtual.vercel.app",
+                "X-Title": "BIA Apoio Virtual",
+              },
+              body: JSON.stringify({
+                model: "google/gemini-2.0-flash:free",
+                messages: [
+                  { role: "system", content: SYSTEM_PROMPT },
+                  ...messages,
+                ],
+                stream: true,
+              }),
+            }
+          );
+        } catch (e) {
+          console.error("Erro de rede na API da OpenRouter:", e);
         }
       } else {
-        console.warn("Chave XAI_API_KEY não configurada. Fallback para Grok ignorado.");
+        console.warn("Chave OPENROUTER_API_KEY não configurada. Fallback para OpenRouter ignorado.");
       }
     }
 
